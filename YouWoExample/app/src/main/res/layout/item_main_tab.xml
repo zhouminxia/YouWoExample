@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <la.baibu.youwoexample.view.TabIconView
+        android:id="@+id/main_bottom_tab_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/main_bottom_tab_text"
+        style="@style/main_bottom_textview_style"
+        android:layout_below="@id/main_bottom_tab_icon"
+        android:text="dddd" />
+
+</LinearLayout>
+

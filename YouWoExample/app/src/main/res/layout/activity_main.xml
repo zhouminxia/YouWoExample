@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myToolBarView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@null">
+
+    <!--<include-->
+    <!--android:id="@+id/top_layout"-->
+    <!--layout="@layout/template_topbar_base" />-->
+
+    <!--<la.baibu.youwoexample.view.MyToolBarView-->
+    <!--android:id="@+id/my_toolbar_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--myToolBarView:leftImageIsVisible="true"-->
+    <!--myToolBarView:leftImageSrc="@drawable/back"-->
+    <!--myToolBarView:leftTextIsVisible="false"-->
+    <!--myToolBarView:middleTextIsVisible="true"-->
+    <!--myToolBarView:rightImageIsVisible="true" />-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_bottom_layout" />
+
+    <!--<include-->
+    <!--layout="@layout/main_bottom_layout"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true" />-->
+    <la.baibu.youwoexample.view.MainBottomTabLayout
+        android:id="@+id/main_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/main_bottom_bg" />
+</RelativeLayout>

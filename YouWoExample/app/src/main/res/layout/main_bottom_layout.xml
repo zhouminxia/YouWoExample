@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/transparent"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:id="@+id/rl_home"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/main_bottom_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_orderlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/youwo_tab_home_normal" />
+
+        <TextView
+            android:id="@+id/tv_home"
+            style="@style/main_bottom_textview_style"
+            android:layout_below="@id/img_orderlist"
+            android:gravity="center"
+            android:text="做到" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_friend"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/main_bottom_bg">
+
+        <ImageView
+            android:id="@+id/img_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/youwo_tab_friend_normal" />
+
+        <TextView
+            android:id="@+id/tv_friend"
+            style="@style/main_bottom_textview_style"
+            android:layout_below="@id/img_message"
+            android:gravity="center"
+            android:text="消息" />
+
+        <TextView
+            android:id="@+id/tv_main_unread_msg_count"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/tv_friend"
+            android:background="@drawable/my_fragment_like_warm"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_sendHelp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/main_bottom_bg" />
+
+        <ImageView
+            android:id="@+id/img_sendHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:scaleType="center"
+            android:src="@drawable/youwo_tab_sendhelp_normal_new" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_square"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/main_bottom_bg">
+
+        <ImageView
+            android:id="@+id/img_square"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/youwo_tab_square_normal" />
+
+        <TextView
+            android:id="@+id/tv_square"
+            style="@style/main_bottom_textview_style"
+            android:layout_below="@id/img_square"
+            android:gravity="center"
+            android:text="广场" />
+
+        <TextView
+            android:id="@+id/tv_square_unread_msg_count"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/tv_square"
+            android:background="@drawable/circle_raduis_4_color_eb3045"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_peraonal"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/main_bottom_bg">
+
+        <ImageView
+            android:id="@+id/img_personal_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/youwo_tab_peraonal_normal" />
+
+        <TextView
+            android:id="@+id/tv_peraonal"
+            style="@style/main_bottom_textview_style"
+            android:layout_below="@id/img_personal_center"
+            android:gravity="center"
+            android:text="个人" />
+
+        <TextView
+            android:id="@+id/tv_main_unread_my_warn"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/tv_peraonal"
+            android:background="@drawable/my_fragment_like_warm"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

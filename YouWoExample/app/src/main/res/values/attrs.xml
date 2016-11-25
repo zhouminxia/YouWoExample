@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyToolBarStyle">
+
+        <!--左边文字-->
+        <attr name="leftTextText" format="string" />
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftTextSize" format="dimension|integer" />
+        <attr name="leftTextIsVisible" format="boolean" />
+        <attr name="leftTextIsClikable" format="boolean" />
+
+        <!--左边图片-->
+        <attr name="leftImageSrc" format="reference|integer" />
+        <attr name="leftImageIsVisible" format="boolean" />
+        <attr name="leftImageIsClikable" format="boolean" />
+
+        <!--中间文字-->
+        <attr name="middleTextText" format="string" />
+        <attr name="middleTextColor" format="color" />
+        <attr name="middleTextSize" format="dimension|integer" />
+        <attr name="middleTextIsVisible" format="boolean" />
+        <attr name="middleTextIsClikable" format="boolean" />
+
+        <!--中间图片-->
+        <attr name="middleImageSrc" format="reference" />
+        <attr name="middleImageIsVisible" format="boolean" />
+        <attr name="middleImageIsClikable" format="boolean" />
+
+        <!--右边文字-->
+        <attr name="rightTextText" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightTextSize" format="dimension|integer" />
+        <attr name="rightTextIsVisible" format="boolean" />
+        <attr name="rightTextIsClikable" format="boolean" />
+
+        <!--右边图片-->
+        <attr name="rightImageSrc" format="reference" />
+        <attr name="rightImageIsVisible" format="boolean" />
+        <attr name="rightImageIsClikable" format="boolean" />
+
+    </declare-styleable>
+</resources>

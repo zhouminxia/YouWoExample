@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myToolBarView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <la.baibu.youwoexample.view.MyToolBarView
+        android:id="@+id/my_toolbar_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        myToolBarView:leftImageIsVisible="true"
+        myToolBarView:leftImageSrc="@drawable/back"
+        myToolBarView:leftTextIsVisible="false"
+        myToolBarView:middleTextIsVisible="true"
+        myToolBarView:rightImageIsVisible="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#44ff0000"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_2d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="initBtnClickLister"
+                android:text="2D"
+                android:background="@null"/>
+
+            <Button
+                android:id="@+id/btn_3d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="initBtnClickLister"
+                android:background="@null"
+                android:text="3D" />
+
+            <Button
+                android:id="@+id/btn_setallite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="initBtnClickLister"
+                android:background="@null"
+                android:text="卫星图" />
+
+            <CheckBox
+                android:id="@+id/btn_road"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setTraffic"
+                android:text="路况图" />
+
+            <CheckBox
+                android:id="@+id/btn_city_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setBaiduHeatMap"
+                android:text="城市热力图" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
