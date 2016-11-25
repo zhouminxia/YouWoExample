@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     //    private MyToolBarView myToolBarView;
 //沉浸式通知栏的一个开源库SystemBarTint,..
+
     private SystemBarTintManager tintManager;
 
     @Override
