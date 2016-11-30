@@ -1,14 +1,10 @@
 package la.baibu.youwoexample.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 
 import com.baidu.location.BDLocation;
@@ -57,7 +53,6 @@ public class MyBaiduMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupSystemBar();
         setContentView(R.layout.activity_mybaidu_map);
         mContext = this;
         initBaiduMap();
@@ -65,32 +60,7 @@ public class MyBaiduMapActivity extends AppCompatActivity {
 
     }
 
-    //沉浸式状态
-    public void setupSystemBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
-        tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(setStautausBarColor());
-    }
 
-    private int setStautausBarColor() {
-        return R.color.system_bar_color;
-    }
-
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
 
     public void initBtnClickLister(View view) {//切换2D  3D  卫星图
         switch (view.getId()) {

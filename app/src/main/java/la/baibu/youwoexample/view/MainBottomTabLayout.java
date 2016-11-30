@@ -26,7 +26,7 @@ public class MainBottomTabLayout extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
 
-    private String mTitles[] = {"有我", "消息", "广场", "我"};
+    private String mTitles[] = {"有我", "消息", "地图", "我"};
     private int mIconRes[][] = {
             {R.drawable.youwo_tab_home_normal, R.drawable.youwo_tab_home_selected},
             {R.drawable.youwo_tab_message_normal, R.drawable.youwo_tab_message_selected},

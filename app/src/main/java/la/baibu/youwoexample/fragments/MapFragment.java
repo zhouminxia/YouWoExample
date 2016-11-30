@@ -9,25 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import la.baibu.youwoexample.MainActivity;
 import la.baibu.youwoexample.R;
-import la.baibu.youwoexample.ui.my.InfoActivity;
+import la.baibu.youwoexample.ui.MyBaiduMapActivity;
 import la.baibu.youwoexample.view.MyToolBarView;
 
 /**
- * Created by minna_Zhou on 2016/11/23 0023.
- * 首页的第一个fragment
+ * Created by minna_Zhou on 2016/11/24 0024.
+ * 首页--我fragment
+ * 功能：1、普通地图（2D，3D）、卫星图；2、POI检索（ktv，覆盖物）；3、线路搜索（b7公交--一条线路）
  */
-public class MyFragment extends Fragment {
-    private static MyToolBarView myToolBarView;
+public class MapFragment extends Fragment {
     private static int position;
-    private MainActivity mContext;
-    private MyToolBarView myToolBarView1;
+    private View view;
+    private MyToolBarView myToolBarView;
+    private Context mContext;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = (MainActivity) context;
+        mContext = context;
     }
 
     @Override
@@ -38,47 +39,44 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my, null);
-        myToolBarView1 = (MyToolBarView) view.findViewById(R.id.my_toolbar_view);
+        view = inflater.inflate(R.layout.fragment_map, container, false);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myToolBarView1.setOnClickMyToolbarRightTextview(new View.OnClickListener() {
+        myToolBarView = (MyToolBarView) view.findViewById(R.id.my_toolbar_view);
+        myToolBarView.setOnClickMyToolbarLeftImageview(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, InfoActivity.class);
+                Intent intent = new Intent(mContext, MyBaiduMapActivity.class);
                 mContext.startActivity(intent);
             }
         });
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     @Override
     public void onResume() {
         super.onResume();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public static Fragment newInstance(int position) {
-        MyFragment.position = position;
-        MyFragment homeFragment = new MyFragment();
-        return homeFragment;
+        MapFragment.position = position;
+        MapFragment mapFragment = new MapFragment();
+        return mapFragment;
     }
+
+
 }

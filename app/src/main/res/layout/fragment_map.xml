@@ -14,8 +14,13 @@
         myToolBarView:leftImageSrc="@drawable/back"
         myToolBarView:leftTextIsVisible="false"
         myToolBarView:middleTextIsVisible="true"
-        myToolBarView:rightImageIsVisible="false"
-        myToolBarView:rightTextIsVisible="true"
-        myToolBarView:rightTextText="资料" />
+        myToolBarView:rightImageIsVisible="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

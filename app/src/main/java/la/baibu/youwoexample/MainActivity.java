@@ -15,7 +15,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import la.baibu.youwoexample.fragments.HomeFragment;
 import la.baibu.youwoexample.fragments.HomeFragment1;
-import la.baibu.youwoexample.fragments.HomeFragment2;
+import la.baibu.youwoexample.fragments.MapFragment;
 import la.baibu.youwoexample.fragments.MyFragment;
 import la.baibu.youwoexample.view.MainBottomTabLayout;
 
@@ -24,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private MainFragmentAdapter mAdapter;
     private MainBottomTabLayout mainBottomTabLayout;
     private ViewPager viewPager;
-    //    private MyToolBarView myToolBarView;
-//沉浸式通知栏的一个开源库SystemBarTint,..
-
+    //沉浸式通知栏的一个开源库SystemBarTint
     private SystemBarTintManager tintManager;
 
     @Override
@@ -36,39 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mainBottomTabLayout = (MainBottomTabLayout) findViewById(R.id.main_bottom_layout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-//        myToolBarView = (MyToolBarView) findViewById(R.id.my_toolbar_view);
         initView();
-//        myToolBarView.setOnClickMyToolbarLister(new MyToolBarView.OnClickMyToolbarListener() {
-//            @Override
-//            public void onClickLeftImageview(ImageView view) {
-//                Toast.makeText(MainActivity.this, "左边的iv", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onClickLeftTextView(TextView view) {
-//                Toast.makeText(MainActivity.this, "左边的tv", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onClickMiddleTextView(TextView view) {
-//                Toast.makeText(MainActivity.this, "中间的tv", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onClickMiddleImageview(ImageView view) {
-//                Toast.makeText(MainActivity.this, "中间的iv", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onClickRightImageview(ImageView view) {
-//                Toast.makeText(MainActivity.this, "右边的iv", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onClickRightTextView(TextView view) {
-//                Toast.makeText(MainActivity.this, "右边的tv", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     //沉浸式状态
@@ -129,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     fragment = HomeFragment1.newInstance(position);
                     break;
-                case 2:
-                    fragment = HomeFragment2.newInstance(position);
-                    break;
                 case 3:
                     fragment = MyFragment.newInstance(position);
+                    break;
+                case 2:
+                    fragment = MapFragment.newInstance(position);
                     break;
                 default:
                     break;
