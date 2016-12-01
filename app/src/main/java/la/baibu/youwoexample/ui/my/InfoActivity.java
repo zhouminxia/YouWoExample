@@ -58,9 +58,10 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     }
 
     @Override
-    protected int setStautausBarColor() {
-        return R.color.transparent;
+    protected int getStatusBarColor() {
+        return statusBarColor;
     }
+
 
     private void initScrollListeners() {
         // 获取顶部图片高度后，设置滚动监听
@@ -98,6 +99,10 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
             toolbarInfo.setBackgroundColor(Color.argb((int) 255, 227, 29, 26));
             statusBarColor = Color.argb((int) 255, 227, 29, 26);
         }
+
+        //改变状态栏的颜色
+        //================报错
+        setupSystemBar();
     }
 
 }

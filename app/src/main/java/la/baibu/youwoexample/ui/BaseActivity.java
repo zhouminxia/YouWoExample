@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import butterknife.ButterKnife;
-import la.baibu.youwoexample.R;
 
 /**
  * Created by minna_Zhou on 2016/11/30 0030.
@@ -50,13 +49,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             setTranslucentStatus(true);
             tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(setStautausBarColor());
+            tintManager.setStatusBarTintResource(getStatusBarColor());
         }
     }
 
-    protected int setStautausBarColor() {
-        return R.color.system_bar_color;
-    }
+    protected abstract int getStatusBarColor();
+
 
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {

@@ -55,6 +55,11 @@ public class MyBaiduMapActivity extends BaseActivity {
     }
 
     @Override
+    protected int getStatusBarColor() {
+        return R.color.system_bar_color;
+    }
+
+    @Override
     protected int getLayoutResID() {
         return R.layout.activity_mybaidu_map;
     }

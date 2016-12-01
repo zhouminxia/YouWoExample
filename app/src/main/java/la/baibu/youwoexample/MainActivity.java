@@ -32,6 +32,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected int getStatusBarColor() {
+        return R.color.system_bar_color;
+    }
+
 
     private void initView() {
         viewPager.setOffscreenPageLimit(4);
