@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import butterknife.ButterKnife;
 import la.baibu.youwoexample.R;
 
 /**
@@ -34,21 +35,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             throw new IllegalArgumentException("you must imple abstract method getLayoutResID");
         }
+        ButterKnife.bind(this);
         initViewsAndDatas();
     }
 
+    protected abstract int getLayoutResID();
+
     protected abstract void initViewsAndDatas();
 
-    protected abstract int getLayoutResID();
 
     //沉浸式状态
     public void setupSystemBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
+            tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(setStautausBarColor());
         }
-        tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(setStautausBarColor());
     }
 
     protected int setStautausBarColor() {

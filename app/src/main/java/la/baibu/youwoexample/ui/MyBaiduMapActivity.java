@@ -1,9 +1,6 @@
 package la.baibu.youwoexample.ui;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -31,7 +28,7 @@ import la.baibu.youwoexample.utils.LocationService;
  * Created by minna_Zhou on 2016/11/24 0024.
  * 功能：1、普通地图（2D，3D）、卫星图；2、POI检索（ktv，覆盖物）；3、线路搜索（b7公交--一条线路）
  */
-public class MyBaiduMapActivity extends AppCompatActivity {
+public class MyBaiduMapActivity extends BaseActivity {
     private MapView mMapView;
     private BaiduMap mBaiduMap;
 
@@ -50,16 +47,17 @@ public class MyBaiduMapActivity extends AppCompatActivity {
     //沉浸式通知栏的一个开源库SystemBarTint,..
     private SystemBarTintManager tintManager;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mybaidu_map);
-        mContext = this;
+    protected void initViewsAndDatas() {
         initBaiduMap();
         initLocation(); //先初始化地图，再开始定位，定位收到位置后，再将位置移到当前位置
-
     }
 
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_mybaidu_map;
+    }
 
 
     public void initBtnClickLister(View view) {//切换2D  3D  卫星图
@@ -271,5 +269,4 @@ public class MyBaiduMapActivity extends AppCompatActivity {
             }
         }
     };
-
 }

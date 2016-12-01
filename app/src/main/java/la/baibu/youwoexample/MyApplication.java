@@ -3,6 +3,7 @@ package la.baibu.youwoexample;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import la.baibu.youwoexample.utils.LocationService;
 
@@ -19,5 +20,6 @@ public class MyApplication extends Application {
         instance = this;
         locationService = new LocationService(getApplicationContext());
         SDKInitializer.initialize(getApplicationContext());//百度地图定位的SDK初始化
+        Fresco.initialize(this);
     }
 }

@@ -14,7 +14,8 @@
         myToolBarView:leftImageSrc="@drawable/back"
         myToolBarView:leftTextIsVisible="false"
         myToolBarView:middleTextIsVisible="true"
-        myToolBarView:rightImageIsVisible="true" />
+        myToolBarView:rightImageIsVisible="true"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"

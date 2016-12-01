@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import la.baibu.youwoexample.MainActivity;
 import la.baibu.youwoexample.R;
 import la.baibu.youwoexample.ui.my.InfoActivity;
@@ -19,10 +22,12 @@ import la.baibu.youwoexample.view.MyToolBarView;
  * 首页的第一个fragment
  */
 public class MyFragment extends Fragment {
-    private static MyToolBarView myToolBarView;
+
     private static int position;
+    @BindView(R.id.my_toolbar_view)
+    MyToolBarView myToolbarView;
     private MainActivity mContext;
-    private MyToolBarView myToolBarView1;
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context) {
@@ -38,21 +43,24 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my, null);
-        myToolBarView1 = (MyToolBarView) view.findViewById(R.id.my_toolbar_view);
+        View view = inflater.inflate(R.layout.fragment_my, container, false);
+//        myToolBarView1 = (MyToolBarView) view.findViewById(R.id.my_toolbar_view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myToolBarView1.setOnClickMyToolbarRightTextview(new View.OnClickListener() {
+        myToolbarView.setOnClickMyToolbarRightTextview(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InfoActivity.class);
                 mContext.startActivity(intent);
             }
         });
+        myToolbarView.setMiddleTextText("个人信息");
     }
 
     @Override
@@ -74,6 +82,7 @@ public class MyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();//解绑
     }
 
     public static Fragment newInstance(int position) {

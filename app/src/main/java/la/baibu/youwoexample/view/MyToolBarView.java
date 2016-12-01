@@ -117,6 +117,7 @@ public class MyToolBarView extends RelativeLayout {
     }
 
 
+
     private void getRightImage() {
         //右边图片
         rightImageResId = typedArray.getResourceId(R.styleable.MyToolBarStyle_rightImageSrc, 0);
@@ -157,7 +158,7 @@ public class MyToolBarView extends RelativeLayout {
 
     private void setRightImage() {
         if (rightImageResId != 0) {
-            middleIv.setImageResource(rightImageResId);
+            rightIv.setImageResource(rightImageResId);
         }
         rightIv.setVisibility(rightImageIsVisible ? View.VISIBLE : View.GONE);
         rightIv.setClickable(rightImageIsClickable);
