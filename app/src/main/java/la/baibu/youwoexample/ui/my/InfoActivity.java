@@ -46,6 +46,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     ObservableScrollView scrollview;
     private int imageHeight;
     private int statusBarColor = Color.parseColor("#00FFFFFF");
+    private Toolbar toolbar;
 
     @Override
     protected int getLayoutResID() {
@@ -54,7 +55,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
 
     @Override
     protected void initViewsAndDatas() {
-        Toolbar toolbar = ButterKnife.findById(InfoActivity.this, R.id.toolbar_info);
+        toolbar = ButterKnife.findById(InfoActivity.this, R.id.toolbar_info);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);//设置返回键不可用
@@ -72,9 +73,16 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         if (android.R.id.home == itemId) {
             finish();
             return true;
+        } else if (R.id.action_one == itemId) {
+            showShortToast("action_one");
+            return true;
+        } else if (R.id.action_two == itemId) {
+            showShortToast("action_two");
+            return true;
+        } else if (R.id.action_three == itemId) {
+            showShortToast("action_three");
+            return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,8 +94,8 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
 
     private void getStatusBarHeightAndTitleBarHeight() {
         int statusBarHeight = SizeUtils.getStatusBarHeight(mContext);
-        int titleBarHeight = 0;
-
+        int titleBarHeight = toolbar.getMeasuredHeight();
+        showShortToast(titleBarHeight + "");
     }
 
     @Override

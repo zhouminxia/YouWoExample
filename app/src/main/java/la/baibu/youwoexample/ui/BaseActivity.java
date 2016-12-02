@@ -6,8 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -67,5 +69,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    protected void showShortToast(String content) {
+        if (!TextUtils.isEmpty(content)) {
+            Toast.makeText(mContext, content, Toast.LENGTH_SHORT).show();
+        }
     }
 }
