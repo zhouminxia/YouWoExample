@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YouWoExample</string>
+    <string name="red_color_str">#bbff0000</string>
 </resources>

@@ -1,6 +1,7 @@
 package la.baibu.youwoexample.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -56,7 +57,7 @@ public class MyBaiduMapActivity extends BaseActivity {
 
     @Override
     protected int getStatusBarColor() {
-        return R.color.system_bar_color;
+        return Color.parseColor(getString(R.string.red_color_str));
     }
 
     @Override

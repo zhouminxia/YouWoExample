@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     //沉浸式通知栏的一个开源库SystemBarTint,..
-    private SystemBarTintManager tintManager;
+    protected SystemBarTintManager tintManager;
     protected Context mContext;
 
     @Override
@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setTranslucentStatus(true);
             tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(getStatusBarColor());
+            tintManager.setStatusBarTintColor(getStatusBarColor());
         }
     }
 

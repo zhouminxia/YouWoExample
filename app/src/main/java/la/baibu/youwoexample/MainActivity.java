@@ -1,5 +1,6 @@
 package la.baibu.youwoexample;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getStatusBarColor() {
-        return R.color.system_bar_color;
+        return Color.parseColor(getString(R.string.red_color_str));
     }
 
 

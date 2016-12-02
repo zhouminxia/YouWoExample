@@ -40,7 +40,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     @BindView(R.id.scrollview)
     ObservableScrollView scrollview;
     private int imageHeight;
-    private int statusBarColor = R.color.transparent;
+    private int statusBarColor = Color.parseColor("#00FFFFFF");
 
 
     @Override
@@ -102,7 +102,8 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
 
         //改变状态栏的颜色
         //================报错
-        setupSystemBar();
+//        setupSystemBar();
+        tintManager.setStatusBarTintColor(statusBarColor);
     }
 
 }
