@@ -88,6 +88,22 @@ public class SizeUtils {
         return statusHeight;
     }
 
+    /**
+     * 获取状态栏高度
+     *
+     * @param context context
+     * @return 状态栏高度
+     */
+    public static int getStatusBarHeight(Context context) {
+        int result = -1;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
     public static int safeParseInt(String value) {
         return !TextUtils.isEmpty(value) && TextUtils.isDigitsOnly(value) && value.length() <= 10 ? Integer.parseInt(value) : 0;
     }
