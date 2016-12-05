@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">YouWoExample</string>
     <string name="red_color_str">#bbff0000</string>
+    <string name="please_select_photo">请选择照片</string>
 </resources>

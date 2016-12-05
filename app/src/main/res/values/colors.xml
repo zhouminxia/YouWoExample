@@ -9,4 +9,7 @@
     <color name="main_tab_text_color_normal">#ffffff</color>
     <color name="main_tab_text_color_selected">#ff0000</color>
     <color name="system_bar_color">#bbff0000</color>
+
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="actionsheet_blue">#037BFF</color>
 </resources>
