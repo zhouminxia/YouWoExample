@@ -27,11 +27,13 @@ import java.io.OutputStream;
 
 import la.baibu.youwoexample.ActionSheetDialog;
 import la.baibu.youwoexample.MyApplication;
+import la.baibu.youwoexample.R;
 
 public class PhotoImageUtil {
     /* 头像名称 */
-    private static String PHOTO_FILE_NAME = "youwoexample_photo.jpg";
+    private static String camera_photo = "youwoexample_photo.jpg";
     private static String PHOTO_FILE_CUT_NAME = "youwoexample_photo_cut.jpg";
+    public static File appCacheDir;
     public static File appDir;
     public static final int PHOTO_REQUEST_CAMERA = 0xF1;// 拍照
     public static final int PHOTO_REQUEST_GALLERY = 0xF2;// 从相册中选择
@@ -40,16 +42,23 @@ public class PhotoImageUtil {
     /**
      * 初始化目录
      */
-    public static void initDir() {
-        appDir = FileUtil.getDiskCacheDir(MyApplication.instance, "pic");
-        System.out.println("--appDir=" + appDir.getAbsolutePath().toString());
-        // --appDir=/storage/emulated/0/Android/data/la.baibu.youwoexample/cache/pic
+    public static void initCacheDir() {
+        String rootStr = Environment.getExternalStorageDirectory()
+                + File.separator + "BaibuBD/baibu_camera" + File.separator;
+        appDir = new File(rootStr);
         if (!appDir.exists()) {
             appDir.mkdirs();
+        }
+
+        appCacheDir = FileUtil.getDiskCacheDir(MyApplication.instance, "pic");
+        System.out.println("--appCacheDir=" + appCacheDir.getAbsolutePath().toString());
+        // --appCacheDir=/storage/emulated/0/Android/data/la.baibu.youwoexample/cache/pic
+        if (!appCacheDir.exists()) {
+            appCacheDir.mkdirs();
         } else {
-            if (!appDir.isDirectory()) {
-                appDir.delete();
-                appDir.mkdirs();
+            if (!appCacheDir.isDirectory()) {
+                appCacheDir.delete();
+                appCacheDir.mkdirs();
             }
         }
     }
@@ -256,29 +265,29 @@ public class PhotoImageUtil {
     }
 
     /**
-     * 上传图片统一接口
+     * 选择本地图片或者拍照
      *
      * @param context
      */
-    public static void uploadPic(String tile, final Context context) {
-        uploadPic(tile, context, null, null);
+    public static void selectLocalImageOrTakePhoto(String tile, final Context context) {
+        selectLocalImageOrTakePhoto(tile, context, null, null);
     }
 
-    public static void uploadPic(String tile, final Context context,
-                                 OnDismissListener dismissListener, OnCancelListener cancelListener) {
+    public static void selectLocalImageOrTakePhoto(String tile, final Context context,
+                                                   OnDismissListener dismissListener, OnCancelListener cancelListener) {
         new ActionSheetDialog(context, dismissListener, cancelListener)
                 .builder()
                 .setTitle(tile)
                 .setCancelable(true)
                 .setCanceledOnTouchOutside(true)
-                .addSheetItem("立即拍照", ActionSheetDialog.SheetItemColor.Blue,
+                .addSheetItem(context.getString(R.string.take_photo), ActionSheetDialog.SheetItemColor.Blue,
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which, String name) {
                                 camera(context);
                             }
                         })
-                .addSheetItem("从本地相册选取", ActionSheetDialog.SheetItemColor.Blue,
+                .addSheetItem(context.getString(R.string.take_image_from_local), ActionSheetDialog.SheetItemColor.Blue,
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which, String name) {
@@ -290,8 +299,12 @@ public class PhotoImageUtil {
     // * 从相机获取
     public static String camera(Context context) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        PHOTO_FILE_NAME = "youwoexample_photo" + System.currentTimeMillis() + ".jpg";
-        File file = new File(appDir, PHOTO_FILE_NAME);
+        camera_photo = "camera_photo" + System.currentTimeMillis() + ".jpg";
+//        File file = new File(appCacheDir, PHOTO_FILE_NAME);
+        File file = new File(appDir, camera_photo);
+        if(!file.exists()){
+            file.mkdir();
+        }
         // 判断存储卡是否可以用，可用进行存储
         if (hasSdcard()) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -321,11 +334,11 @@ public class PhotoImageUtil {
 
     // *本地获取剪切照片
     public static void crop(Context context, Uri uri, int size) {
-        PHOTO_FILE_NAME = "youwoexample_photo" + System.currentTimeMillis() + ".jpg";
+        camera_photo = "youwoexample_photo" + System.currentTimeMillis() + ".jpg";
         PHOTO_FILE_CUT_NAME = "youwoexample_cut_photo" + System.currentTimeMillis()
                 + ".jpg";
-        File tempFile = new File(appDir, PHOTO_FILE_CUT_NAME);
-        File recutfile = new File(appDir, PHOTO_FILE_NAME);
+        File tempFile = new File(appCacheDir, PHOTO_FILE_CUT_NAME);
+        File recutfile = new File(appCacheDir, camera_photo);
         // 处理下否则有些超大的图片会横着进入剪切
         byte[] temp = getimage(getRealPathFromURI(context, uri), false);
         if (temp == null) {
@@ -356,8 +369,8 @@ public class PhotoImageUtil {
 
     // * 拍照剪切照相的图片
     public static void crop(Context context, int size) {
-        File tempFile = new File(appDir, PHOTO_FILE_NAME);
-        File tempFile2 = new File(appDir, PHOTO_FILE_CUT_NAME);
+        File tempFile = new File(appCacheDir, camera_photo);
+        File tempFile2 = new File(appCacheDir, PHOTO_FILE_CUT_NAME);
         byte[] temp = getimage(tempFile.getPath(), false);
         if (temp == null) {
             Toast.makeText(context, "抱歉，图像获取失败", Toast.LENGTH_LONG).show();
@@ -412,7 +425,7 @@ public class PhotoImageUtil {
     public static void saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片
         String fileName = System.currentTimeMillis() + ".jpg";
-        File file = new File(appDir, fileName);
+        File file = new File(appCacheDir, fileName);
         try {
             FileOutputStream fos = new FileOutputStream(file);
             bmp.compress(CompressFormat.JPEG, 100, fos);

@@ -107,7 +107,8 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
                 SelectImageBean imageBean = mImages.get(position);
                 int imageType = imageBean.getImageType();
                 if (SelectImageBean.TYPE_DEFAULT_IMAGE == imageType) {
-                    selectLocalImageOrPhoto();
+//                    弹出底部对话框，选择本地图片或拍照
+                    PhotoImageUtil.selectLocalImageOrTakePhoto(getString(R.string.please_select_photo), mContext);
                 } else if (SelectImageBean.TYPE_IMAGE == imageType) {
                     showShortToast("TYPE_IMAGE");
                 }
@@ -115,20 +116,14 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         });
     }
 
-    /*
-    弹出底部对话框，选择本地图片或拍照
-     */
-    private void selectLocalImageOrPhoto() {
-        PhotoImageUtil.uploadPic(getString(R.string.please_select_photo), mContext);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(RESULT_OK==resultCode){
-            if(PhotoImageUtil.PHOTO_REQUEST_CAMERA==requestCode){
+        if (RESULT_OK == resultCode) {
+            if (PhotoImageUtil.PHOTO_REQUEST_CAMERA == requestCode) {
                 showShortToast("PHOTO_REQUEST_CAMERA");
-            }else if(PhotoImageUtil.PHOTO_REQUEST_GALLERY==requestCode){
+            } else if (PhotoImageUtil.PHOTO_REQUEST_GALLERY == requestCode) {
 
             }
         }

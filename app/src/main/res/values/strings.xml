@@ -2,4 +2,6 @@
     <string name="app_name">YouWoExample</string>
     <string name="red_color_str">#bbff0000</string>
     <string name="please_select_photo">请选择照片</string>
+    <string name="take_photo">立即拍照</string>
+    <string name="take_image_from_local">从本地相册选取</string>
 </resources>

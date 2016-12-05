@@ -22,6 +22,6 @@ public class MyApplication extends Application {
         locationService = new LocationService(getApplicationContext());
         SDKInitializer.initialize(getApplicationContext());//百度地图定位的SDK初始化
         Fresco.initialize(this);
-        PhotoImageUtil.initDir();
+        PhotoImageUtil.initCacheDir();//初始化缓存目录
     }
 }

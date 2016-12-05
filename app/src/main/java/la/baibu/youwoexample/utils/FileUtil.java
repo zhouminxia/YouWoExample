@@ -22,7 +22,6 @@ public class FileUtil {
     }
 
     public static File getExternalCacheDir(Context context) {
-        System.out.println("--Build.VERSION.SDK_INT=" + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= 8) {
             return context.getExternalCacheDir();
         } else {
