@@ -3,6 +3,7 @@ package la.baibu.youwoexample.ui.my;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,8 @@ import la.baibu.youwoexample.R;
 import la.baibu.youwoexample.adapter.MyGridViewAdapter;
 import la.baibu.youwoexample.bean.SelectImageBean;
 import la.baibu.youwoexample.ui.BaseActivity;
+import la.baibu.youwoexample.utils.CameraUtil;
 import la.baibu.youwoexample.utils.FrescoUtil;
-import la.baibu.youwoexample.utils.PhotoImageUtil;
 import la.baibu.youwoexample.utils.SizeUtils;
 import la.baibu.youwoexample.view.ObservableScrollView;
 
@@ -61,6 +63,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     private Toolbar toolbar;
     private List<SelectImageBean> mImages = new ArrayList<SelectImageBean>();
     private MyGridViewAdapter myGridViewAdapter;
+    private File cameraFile;
 
     @Override
     protected int getLayoutResID() {
@@ -108,7 +111,8 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
                 int imageType = imageBean.getImageType();
                 if (SelectImageBean.TYPE_DEFAULT_IMAGE == imageType) {
 //                    弹出底部对话框，选择本地图片或拍照
-                    PhotoImageUtil.selectLocalImageOrTakePhoto(getString(R.string.please_select_photo), mContext);
+                    takePhoto();
+//                    PhotoUtil.uploadPic(getString(R.string.please_select_photo), mContext);
                 } else if (SelectImageBean.TYPE_IMAGE == imageType) {
                     showShortToast("TYPE_IMAGE");
                 }
@@ -116,17 +120,28 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         });
     }
 
+    private void takePhoto() {
+        cameraFile = null;//每次都置空
+        cameraFile = CameraUtil.camera(InfoActivity.this);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
-            if (PhotoImageUtil.PHOTO_REQUEST_CAMERA == requestCode) {
-                showShortToast("PHOTO_REQUEST_CAMERA");
-            } else if (PhotoImageUtil.PHOTO_REQUEST_GALLERY == requestCode) {
+            System.out.println("--RESULT_OK");
+            if (CameraUtil.CAMERA_REQUEST_CODE == requestCode) {
+                Uri uri = data.getData();
+                System.out.println("--uri=" + uri.toString());
 
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("--InfoActivity-onDestroy");
     }
 
     private void addDefaultImage() {

@@ -87,4 +87,10 @@ public class MainActivity extends BaseActivity {
             return tabCount[position % tabCount.length];
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("--mainactivity-onDestroy");
+    }
 }

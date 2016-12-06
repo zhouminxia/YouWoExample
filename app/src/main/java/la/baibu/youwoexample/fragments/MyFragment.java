@@ -83,6 +83,7 @@ public class MyFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();//解绑
+        System.out.println("--MyFragment-onDestroyView");
     }
 
     public static Fragment newInstance(int position) {
