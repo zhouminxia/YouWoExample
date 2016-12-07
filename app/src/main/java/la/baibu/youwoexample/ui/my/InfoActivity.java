@@ -1,9 +1,14 @@
 package la.baibu.youwoexample.ui.my;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.Point;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +30,10 @@ import butterknife.ButterKnife;
 import la.baibu.youwoexample.R;
 import la.baibu.youwoexample.adapter.MyGridViewAdapter;
 import la.baibu.youwoexample.bean.SelectImageBean;
+import la.baibu.youwoexample.contants.BroadcastContants;
 import la.baibu.youwoexample.ui.BaseActivity;
 import la.baibu.youwoexample.utils.CameraUtil;
 import la.baibu.youwoexample.utils.FrescoUtil;
-import la.baibu.youwoexample.utils.SizeUtils;
 import la.baibu.youwoexample.view.ObservableScrollView;
 
 /**
@@ -60,12 +65,11 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     private int imageHeight;
     private int statusBarColor = Color.parseColor("#00FFFFFF");
     private Toolbar toolbar;
-    private List<SelectImageBean> mImages = new ArrayList<SelectImageBean>();
     private MyGridViewAdapter myGridViewAdapter;
     private File cameraFile;//拍照返回的文件
     private String cameraFilePath;//拍照返回文件的路径
-    private String selectedFilePath;//选择图片
-    private ArrayList<String> selectedFilePathList = new ArrayList<String>();//选择图片的所有路径
+    private ArrayList<String> addPhotoPathList = new ArrayList<String>();//添加的照片文件的路径集合
+    private List<SelectImageBean> mImages = new ArrayList<SelectImageBean>();
 
     @Override
     protected int getLayoutResID() {
@@ -91,10 +95,13 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
      * 初始化水平的照片墙
      */
     private void initHorizontolGridView() {
-        addDefaultImage();//加一张默认的图片
+        addImages(true, null);//加一张默认的图片
 
+        refreshMyGridView();
+    }
+
+    private void refreshMyGridView() {
         if (myGridViewAdapter == null) {
-
             setGridViewParams();
             myGridViewAdapter = new MyGridViewAdapter(mContext, mImages);
             gvPhotoWall.setAdapter(myGridViewAdapter);
@@ -102,6 +109,11 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         } else {
             setGridViewParams();
             myGridViewAdapter.notifyDataSetChanged();
+        }
+
+        for (int i = 0; i < mImages.size(); i++) {
+            String imagePath = mImages.get(i).getImagePath();
+            System.out.println("--现在有几个Image= i=" + i + "---path=" + imagePath);
         }
     }
 
@@ -138,52 +150,76 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
                 //默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，可以通过dat extra能够得到原始图片位置。
                 // 如果指定了目标uri，data就没有数据，如果没有指定uri，则data就返回有数据！
-//                Uri uri = data.getData();//data是为空的
+//                Uri uri = data.getData();//所以data是为空的
                 if (cameraFilePath != null) {
-                    selectedFilePath = cameraFilePath;
-                    selectedFilePathList.add(selectedFilePath);
-                    CameraUtil.sendBroadCaseRemountSDcard(cameraFile);
-                    System.out.println("--selectedFilePath=" + selectedFilePath);
+                    if (cameraFilePath != null) {
+                        addPhotoPathList.clear();
+                        addPhotoPathList.add(cameraFilePath);
+                        broadCastPhoto();//（压缩+广播）
+                        CameraUtil.sendBroadCaseRemountSDcard(cameraFile);//插入到系统相册
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * 广播照片，然后需要压缩
+     */
+    private void broadCastPhoto() {
+        Intent imageIntent = new Intent();
+        imageIntent.setAction(BroadcastContants.IMAGE_SELECTED_FROM_MEDIA_ACTION);
+        imageIntent.putStringArrayListExtra(
+                BroadcastContants.IMAGE_SELECTED_LIST, addPhotoPathList);
+        sendOrderedBroadcast(imageIntent, null);//有序广播
+//        finish();
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mImageReceiver);
         System.out.println("--InfoActivity-onDestroy");
     }
-
-    private void addDefaultImage() {
-        List<SelectImageBean> tempImages = new ArrayList<SelectImageBean>();
-        tempImages.add(new SelectImageBean(SelectImageBean.TYPE_DEFAULT_IMAGE, ""));//加一张默认的
-        mImages.addAll(tempImages);
-    }
-
 
     /**
      * 设置GirdView参数，绑定数据
      */
     private void setGridViewParams() {
+        System.out.println("--mImages.size=" + mImages.size());
         int size = mImages.size();
-        if (size < MyGridViewAdapter.maxPhotoes) {
-            size++;//有add
-        }
-        Point point = SizeUtils.autoGetWidthAndHeight(this, 10, 10, 4, 6, 1.0f);
-        int horizontalSpacing = SizeUtils.dip2px(this, 6);
-        int width = point.x * size + (size + 1) * horizontalSpacing;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int allWidth = (int) (110 * size * density);
+        System.out.println("--allWidth=" + allWidth);
+        int itemWidth = (int) (100 * density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                width, LinearLayout.LayoutParams.MATCH_PARENT);
-        gvPhotoWall.setColumnWidth(point.x); // 设置列表项宽
-        gvPhotoWall.setHorizontalSpacing(horizontalSpacing); // 设置列表项水平间距
+                allWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        gvPhotoWall.setLayoutParams(params);
+        gvPhotoWall.setColumnWidth(itemWidth);
+        gvPhotoWall.setHorizontalSpacing(10);
         gvPhotoWall.setStretchMode(GridView.NO_STRETCH);
-        gvPhotoWall.setNumColumns(size); // 设置列数量=列表集合数
-        params.topMargin = SizeUtils.dip2px(this, 6);
-//        params.leftMargin = SizeUtils.dip2px(this, 10);
-//        params.rightMargin = SizeUtils.dip2px(this, 10);
-        gvPhotoWall.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gvPhotoWall.setNumColumns(size);
+
+//        int size = mImages.size();
+//        if (size < MyGridViewAdapter.maxPhotoes) {
+//            size++;//有add
+//        }
+//        Point point = SizeUtils.autoGetWidthAndHeight(this, 10, 10, 4, 6, 1.0f);
+//        int horizontalSpacing = SizeUtils.dip2px(this, 6);
+//        int width = point.x * size + (size + 1) * horizontalSpacing;
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                width, LinearLayout.LayoutParams.MATCH_PARENT);
+//        gvPhotoWall.setColumnWidth(point.x); // 设置列表项宽
+//        gvPhotoWall.setHorizontalSpacing(horizontalSpacing); // 设置列表项水平间距
+//        gvPhotoWall.setStretchMode(GridView.NO_STRETCH);
+//        gvPhotoWall.setNumColumns(size); // 设置列数量=列表集合数
+//        params.topMargin = SizeUtils.dip2px(this, 6);
+////        params.leftMargin = SizeUtils.dip2px(this, 10);
+////        params.rightMargin = SizeUtils.dip2px(this, 10);
+//        gvPhotoWall.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
     }
 
     @Override
@@ -211,11 +247,17 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         return true;
     }
 
-//    private void getStatusBarHeightAndTitleBarHeight() {
-//        int statusBarHeight = SizeUtils.getStatusBarHeight(mContext);
-//        int titleBarHeight = toolbar.getMeasuredHeight();
-//        showShortToast(titleBarHeight + "");
-//    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initImageBroadcastReceiver();//注册图片广播
+    }
+
+    private void initImageBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter(BroadcastContants.IMAGE_SELECTED_FROM_MEDIA_ACTION);
+        registerReceiver(mImageReceiver, intentFilter);
+    }
 
     @Override
     protected int getStatusBarColor() {
@@ -257,5 +299,38 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         }
         //改变状态栏的颜色
         tintManager.setStatusBarTintColor(statusBarColor);
+    }
+
+    private BroadcastReceiver mImageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<String> imageSelectedList = intent.getStringArrayListExtra(BroadcastContants.IMAGE_SELECTED_LIST);
+            if (imageSelectedList.size() > 0) {
+                addImages(false, imageSelectedList);//添加的那一张照片
+                refreshMyGridView();//刷新
+            }
+        }
+    };
+
+    /**
+     * @param imageSelectedList 选中照片的集合
+     * @param isAddDefault      是否是添加一张默认图片
+     */
+    private void addImages(boolean isAddDefault, ArrayList<String> imageSelectedList) {
+        if (isAddDefault) {
+            List<SelectImageBean> tempImages = new ArrayList<SelectImageBean>();
+            tempImages.add(new SelectImageBean(SelectImageBean.TYPE_DEFAULT_IMAGE, ""));//加一张默认的
+            mImages.addAll(tempImages);
+        } else {
+            if (imageSelectedList != null && imageSelectedList.size() > 0) {
+                for (int i = 0; i < imageSelectedList.size(); i++) {
+                    SelectImageBean bean = new SelectImageBean();
+                    String path = imageSelectedList.get(i);
+                    bean.setImageType(SelectImageBean.TYPE_IMAGE);
+                    bean.setImagePath(path);
+                    mImages.add(bean);
+                }
+            }
+        }
     }
 }
