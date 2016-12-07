@@ -3,7 +3,6 @@ package la.baibu.youwoexample.utils;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,9 +14,8 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-import la.baibu.youwoexample.ActionSheetDialog;
 import la.baibu.youwoexample.MyApplication;
-import la.baibu.youwoexample.R;
+import la.baibu.youwoexample.contants.RequestCode;
 
 /**
  * Created by minna_Zhou on 2016/12/6 0006.
@@ -27,18 +25,13 @@ import la.baibu.youwoexample.R;
  */
 public class CameraUtil {
 
-    public static int CAMERA_REQUEST_CODE = 1000;
     public static String rootDir = Environment.getExternalStorageDirectory()
             + File.separator + "YOUWO/youwo_camera" + File.separator;//应用即使被卸载，这个文件夹也不会被删掉
 
     public static String fileName = "";
 
     // 调用系统照相机的方法
-    public static File camera(Activity ac) {
-        /*
-         * Intent it = new Intent("android.media.action.IMAGE_CAPTURE");
-		 * startActivityForResult(it, Activity.DEFAULT_KEYS_DIALER);
-		 */
+    public static File camera(Context ac) {
         File f = null;
         String name = "";
         String status = Environment.getExternalStorageState();
@@ -46,8 +39,9 @@ public class CameraUtil {
             try {
                 name = callTime();
                 File dir = new File(rootDir);
-                if (!dir.exists())
+                if (!dir.exists()) {
                     dir.mkdirs();
+                }
 
                 Intent intent = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
@@ -55,7 +49,7 @@ public class CameraUtil {
                 Uri u = Uri.fromFile(f);
                 intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                ac.startActivityForResult(intent, CAMERA_REQUEST_CODE);
+                ((Activity) ac).startActivityForResult(intent, RequestCode.CAMERA_REQUEST_CODE);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(ac, "没有找到储存目录", Toast.LENGTH_SHORT).show();
             }
@@ -113,28 +107,6 @@ public class CameraUtil {
         }
     }
 
-    public static void selectLocalImageOrTakePhoto(String tile, final Context context,
-                                                   DialogInterface.OnDismissListener dismissListener, DialogInterface.OnCancelListener cancelListener) {
-        new ActionSheetDialog(context, dismissListener, cancelListener)
-                .builder()
-                .setTitle(tile)
-                .setCancelable(true)
-                .setCanceledOnTouchOutside(true)
-                .addSheetItem(context.getString(R.string.take_photo), ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which, String name) {
-//                                camera(context);
-                            }
-                        })
-                .addSheetItem(context.getString(R.string.take_image_from_local), ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which, String name) {
-//                                gallery(context);
-                            }
-                        }).show();
-    }
 
     // * 从相册获取
     public static void gallery(Context context) {
@@ -143,7 +115,6 @@ public class CameraUtil {
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 "image/*");
         ((Activity) context).startActivityForResult(intent,
-                CAMERA_REQUEST_CODE);//==============
+                RequestCode.GALLERY_REQUEST_CODE);
     }
-
 }

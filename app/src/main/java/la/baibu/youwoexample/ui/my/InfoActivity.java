@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -27,10 +28,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import la.baibu.youwoexample.ActionSheetDialog;
 import la.baibu.youwoexample.R;
 import la.baibu.youwoexample.adapter.MyGridViewAdapter;
 import la.baibu.youwoexample.bean.SelectImageBean;
 import la.baibu.youwoexample.contants.BroadcastContants;
+import la.baibu.youwoexample.contants.RequestCode;
 import la.baibu.youwoexample.ui.BaseActivity;
 import la.baibu.youwoexample.utils.CameraUtil;
 import la.baibu.youwoexample.utils.FrescoUtil;
@@ -124,17 +127,48 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
                 SelectImageBean imageBean = mImages.get(position);
                 int imageType = imageBean.getImageType();
                 if (SelectImageBean.TYPE_DEFAULT_IMAGE == imageType) {
-//                    弹出底部对话框，选择本地图片或拍照
-                    takePhoto();
-//                    PhotoUtil.uploadPic(getString(R.string.please_select_photo), mContext);
+                    selectLocalImageOrTakePhoto();
                 } else if (SelectImageBean.TYPE_IMAGE == imageType) {
-                    showShortToast("TYPE_IMAGE");
+                    showShortToast("预览");
                 }
             }
         });
     }
 
-    private void takePhoto() {
+    private void selectLocalImageOrTakePhoto() {
+        new ActionSheetDialog(mContext)
+                .builder()
+                .setTitle(getString(R.string.please_select_photo))
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem(mContext.getString(R.string.take_photo), ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which, String name) {
+                                takePhotoFromCamera();
+                            }
+                        })
+                .addSheetItem(mContext.getString(R.string.take_image_from_local), ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which, String name) {
+                                takePhotoFromLocolGallery();
+                            }
+
+                        }).show();
+    }
+
+    /**
+     * 从本地相册拿照片
+     */
+    private void takePhotoFromLocolGallery() {
+        CameraUtil.gallery(mContext);
+    }
+
+    /**
+     * 从相册拿照片
+     */
+    private void takePhotoFromCamera() {
         cameraFile = CameraUtil.camera(InfoActivity.this);//拍照页面返回的文件
 
         if (cameraFile != null) {
@@ -146,18 +180,28 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
-            if (CameraUtil.CAMERA_REQUEST_CODE == requestCode) {
+            if (RequestCode.CAMERA_REQUEST_CODE == requestCode) {
                 //默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，可以通过dat extra能够得到原始图片位置。
                 // 如果指定了目标uri，data就没有数据，如果没有指定uri，则data就返回有数据！
 //                Uri uri = data.getData();//所以data是为空的
+                addPhotoPathList.clear();
+
                 if (cameraFilePath != null) {
                     if (cameraFilePath != null) {
-                        addPhotoPathList.clear();
                         addPhotoPathList.add(cameraFilePath);
                         broadCastPhoto();//（压缩+广播）
                         CameraUtil.sendBroadCaseRemountSDcard(cameraFile);//插入到系统相册
                     }
+                }
+            } else if (RequestCode.GALLERY_REQUEST_CODE == requestCode) {
+                if (data != null) {
+                    Uri uri = data.getData();
+
+                    addPhotoPathList.add(uri.toString());
+//                    broadCastPhoto();//（压缩+广播）
+                    System.out.println("--uri.toString()=" + uri.toString());
+                    //path=content://media/external/images/media/34946
                 }
             }
         }
@@ -197,11 +241,11 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         int itemWidth = (int) (100 * density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 allWidth, LinearLayout.LayoutParams.FILL_PARENT);
-        gvPhotoWall.setLayoutParams(params);
         gvPhotoWall.setColumnWidth(itemWidth);
         gvPhotoWall.setHorizontalSpacing(10);
         gvPhotoWall.setStretchMode(GridView.NO_STRETCH);
         gvPhotoWall.setNumColumns(size);
+        gvPhotoWall.setLayoutParams(params);
 
 //        int size = mImages.size();
 //        if (size < MyGridViewAdapter.maxPhotoes) {

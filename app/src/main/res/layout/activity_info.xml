@@ -30,23 +30,23 @@
                 android:id="@+id/horizontal_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:scrollbars="none">
 
+                <LinearLayout
+                    android:id="@+id/ll_gridview_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/ll_gridview_container"
-                        android:layout_width="wrap_content"
+                    <GridView
+                        android:id="@+id/gv_photo_wall"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <GridView
-                            android:id="@+id/gv_photo_wall"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:numColumns="auto_fit"
-                            android:stretchMode="spacingWidthUniform"></GridView>
-                    </LinearLayout>
+                        android:gravity="center"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="spacingWidthUniform"></GridView>
+                </LinearLayout>
             </HorizontalScrollView>
 
 
