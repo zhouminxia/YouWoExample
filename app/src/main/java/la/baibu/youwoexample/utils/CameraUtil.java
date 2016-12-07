@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import la.baibu.youwoexample.ActionSheetDialog;
+import la.baibu.youwoexample.MyApplication;
 import la.baibu.youwoexample.R;
 
 /**
@@ -27,7 +29,7 @@ public class CameraUtil {
 
     public static int CAMERA_REQUEST_CODE = 1000;
     public static String rootDir = Environment.getExternalStorageDirectory()
-            + File.separator + "YOUWO/youwo_camera" + File.separator;
+            + File.separator + "YOUWO/youwo_camera" + File.separator;//应用即使被卸载，这个文件夹也不会被删掉
 
     public static String fileName = "";
 
@@ -52,7 +54,7 @@ public class CameraUtil {
                 f = new File(dir, name + ".jpeg");// localTempImgDir和localTempImageFileName是自己定义的名字
                 Uri u = Uri.fromFile(f);
                 intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
                 ac.startActivityForResult(intent, CAMERA_REQUEST_CODE);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(ac, "没有找到储存目录", Toast.LENGTH_SHORT).show();
@@ -61,16 +63,6 @@ public class CameraUtil {
             Toast.makeText(ac, "没有储存卡", Toast.LENGTH_SHORT).show();
         }
         return f;
-//        //1、调用相机
-//        File mPhotoFile = new File(rootDir, name);
-//        if (!mPhotoFile.exists()) {
-//            mPhotoFile.mkdirs();
-//        }
-//        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        Uri fileUri = Uri.fromFile(mPhotoFile);
-//        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-//        ac.startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
-//        return mPhotoFile;
     }
 
     public static String callTime() {
@@ -97,6 +89,28 @@ public class CameraUtil {
 
         return time;
 
+    }
+
+
+    /**
+     * 发送广播，重新挂载SD卡
+     */
+    public static void sendBroadCaseRemountSDcard(File mPhotoFile) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Intent mediaScanIntent = new Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                Uri contentUri = Uri.fromFile(mPhotoFile); //out is your output file
+                mediaScanIntent.setData(contentUri);
+                MyApplication.getInstance().sendBroadcast(mediaScanIntent);
+            } else {
+                MyApplication.getInstance().sendBroadcast(new Intent(
+                        Intent.ACTION_MEDIA_MOUNTED,
+                        Uri.parse("file://"
+                                + Environment.getExternalStorageDirectory())));
+            }
+        } catch (Exception e) {
+        }
     }
 
     public static void selectLocalImageOrTakePhoto(String tile, final Context context,

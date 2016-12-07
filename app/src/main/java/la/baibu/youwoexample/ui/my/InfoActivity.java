@@ -3,7 +3,6 @@ package la.baibu.youwoexample.ui.my;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,7 +62,10 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     private Toolbar toolbar;
     private List<SelectImageBean> mImages = new ArrayList<SelectImageBean>();
     private MyGridViewAdapter myGridViewAdapter;
-    private File cameraFile;
+    private File cameraFile;//拍照返回的文件
+    private String cameraFilePath;//拍照返回文件的路径
+    private String selectedFilePath;//选择图片
+    private ArrayList<String> selectedFilePathList = new ArrayList<String>();//选择图片的所有路径
 
     @Override
     protected int getLayoutResID() {
@@ -121,22 +123,32 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     }
 
     private void takePhoto() {
-        cameraFile = null;//每次都置空
-        cameraFile = CameraUtil.camera(InfoActivity.this);
+        cameraFile = CameraUtil.camera(InfoActivity.this);//拍照页面返回的文件
+
+        if (cameraFile != null) {
+            cameraFilePath = cameraFile.getAbsolutePath();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
-            System.out.println("--RESULT_OK");
             if (CameraUtil.CAMERA_REQUEST_CODE == requestCode) {
-                Uri uri = data.getData();
-                System.out.println("--uri=" + uri.toString());
-
+                //默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，可以通过dat extra能够得到原始图片位置。
+                // 如果指定了目标uri，data就没有数据，如果没有指定uri，则data就返回有数据！
+//                Uri uri = data.getData();//data是为空的
+                if (cameraFilePath != null) {
+                    selectedFilePath = cameraFilePath;
+                    selectedFilePathList.add(selectedFilePath);
+                    CameraUtil.sendBroadCaseRemountSDcard(cameraFile);
+                    System.out.println("--selectedFilePath=" + selectedFilePath);
+                }
             }
         }
     }
+
 
     @Override
     protected void onDestroy() {

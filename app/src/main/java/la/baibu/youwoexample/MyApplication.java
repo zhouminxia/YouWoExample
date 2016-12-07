@@ -11,7 +11,6 @@ import la.baibu.youwoexample.utils.LocationService;
  * Created by minna_Zhou on 2016/11/24 0024.
  */
 public class MyApplication extends Application {
-    public static MyApplication instance;
     public LocationService locationService;
 
     @Override
@@ -22,4 +21,14 @@ public class MyApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());//百度地图定位的SDK初始化
         Fresco.initialize(this);
     }
+
+    private static MyApplication instance = null;
+
+    public static MyApplication getInstance() {
+        synchronized (MyApplication.class) {
+            return instance;
+
+        }
+    }
+
 }
