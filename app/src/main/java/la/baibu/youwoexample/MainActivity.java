@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import la.baibu.youwoexample.fragments.HomeFragment;
-import la.baibu.youwoexample.fragments.HomeFragment1;
+import la.baibu.youwoexample.fragments.SecondFragment;
 import la.baibu.youwoexample.fragments.MapFragment;
 import la.baibu.youwoexample.fragments.MyFragment;
 import la.baibu.youwoexample.ui.BaseActivity;
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
                     fragment = HomeFragment.newInstance(position);
                     break;
                 case 1:
-                    fragment = HomeFragment1.newInstance(position);
+                    fragment = SecondFragment.newInstance(position);
                     break;
                 case 2:
                     fragment = MapFragment.newInstance(position);

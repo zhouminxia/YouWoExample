@@ -15,7 +15,7 @@ import la.baibu.youwoexample.R;
  * Created by minna_Zhou on 2016/11/23 0023.
  * 首页的第一个fragment
  */
-public class HomeFragment1 extends Fragment {
+public class SecondFragment extends Fragment {
     private static int position;
     private MainActivity mainActivity;
 
@@ -59,8 +59,8 @@ public class HomeFragment1 extends Fragment {
     }
 
     public static Fragment newInstance(int position) {
-        HomeFragment1.position = position;
-        HomeFragment1 homeFragment = new HomeFragment1();
+        SecondFragment.position = position;
+        SecondFragment homeFragment = new SecondFragment();
         return homeFragment;
     }
 

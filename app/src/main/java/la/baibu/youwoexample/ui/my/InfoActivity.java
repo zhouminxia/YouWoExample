@@ -246,24 +246,6 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         gvPhotoWall.setStretchMode(GridView.NO_STRETCH);
         gvPhotoWall.setNumColumns(size);
         gvPhotoWall.setLayoutParams(params);
-
-//        int size = mImages.size();
-//        if (size < MyGridViewAdapter.maxPhotoes) {
-//            size++;//有add
-//        }
-//        Point point = SizeUtils.autoGetWidthAndHeight(this, 10, 10, 4, 6, 1.0f);
-//        int horizontalSpacing = SizeUtils.dip2px(this, 6);
-//        int width = point.x * size + (size + 1) * horizontalSpacing;
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                width, LinearLayout.LayoutParams.MATCH_PARENT);
-//        gvPhotoWall.setColumnWidth(point.x); // 设置列表项宽
-//        gvPhotoWall.setHorizontalSpacing(horizontalSpacing); // 设置列表项水平间距
-//        gvPhotoWall.setStretchMode(GridView.NO_STRETCH);
-//        gvPhotoWall.setNumColumns(size); // 设置列数量=列表集合数
-//        params.topMargin = SizeUtils.dip2px(this, 6);
-////        params.leftMargin = SizeUtils.dip2px(this, 10);
-////        params.rightMargin = SizeUtils.dip2px(this, 10);
-//        gvPhotoWall.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
     }
 
     @Override
