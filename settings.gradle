@@ -1,1 +1,1 @@
-include ':app', ':easeui-master'
+include ':app'

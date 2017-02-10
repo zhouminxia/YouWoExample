@@ -94,6 +94,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
         initHorizontolGridView();
     }
 
+
     /**
      * 初始化水平的照片墙
      */
