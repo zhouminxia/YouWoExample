@@ -12,7 +12,7 @@ class YouWoExample extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.hello}>我爱祖国，祖国爱我,欢迎来到混合开发！！</Text>
+        <Text style={styles.hello}>欢迎来到混合开发，123！！</Text>
       </View>
     )
   }

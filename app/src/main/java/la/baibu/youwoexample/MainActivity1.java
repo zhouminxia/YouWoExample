@@ -36,7 +36,7 @@ public class MainActivity1 extends AppCompatActivity implements DefaultHardwareB
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        // 注意这里的HelloWorld必须对应“index.android.js”中的
+        // 注意这里的YouWoExample必须对应“index.android.js”中的
         // “AppRegistry.registerComponent()”的第一个参数
         mReactRootView.startReactApplication(mReactInstanceManager, "YouWoExample", null);
 
