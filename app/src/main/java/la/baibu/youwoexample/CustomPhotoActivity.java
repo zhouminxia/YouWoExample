@@ -65,6 +65,12 @@ public class CustomPhotoActivity extends AppCompatActivity implements View.OnCli
         mPreview = (SurfaceView) findViewById(R.id.surfaceview);
         mHolder = mPreview.getHolder();
         mHolder.addCallback(this);
+        mPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCamera.autoFocus(null);//一进来，点击下，就自动聚焦，但是没有回调。
+            }
+        });
     }
 
     @Override
