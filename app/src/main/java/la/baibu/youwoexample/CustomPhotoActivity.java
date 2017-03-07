@@ -19,6 +19,7 @@ import java.io.IOException;
 
 /**
  * Created by minna_Zhou on 2017/2/15 0015.
+ * surfaceview是时时预览的（一般用作相机、扫描的控件）;surfaceholder是来控制surfaceview的显示的；实现SurfaceHolder.Callback接口
  */
 public class CustomPhotoActivity extends AppCompatActivity implements View.OnClickListener, SurfaceHolder.Callback {
 
@@ -63,7 +64,8 @@ public class CustomPhotoActivity extends AppCompatActivity implements View.OnCli
 
 
         mPreview = (SurfaceView) findViewById(R.id.surfaceview);
-        mHolder = mPreview.getHolder();
+        mHolder = mPreview.getHolder();//providing access and control over this SurfaceView's underlying surface.
+
         mHolder.addCallback(this);
         mPreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +86,7 @@ public class CustomPhotoActivity extends AppCompatActivity implements View.OnCli
     private void capture() {
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPictureFormat(ImageFormat.JPEG);
-        parameters.setPreviewSize(800, 400);
+//        parameters.setPreviewSize(800, 400);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         mCamera.autoFocus(new Camera.AutoFocusCallback() {
             @Override

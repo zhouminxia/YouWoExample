@@ -47,4 +47,5 @@ dependencies {
     compile files('libs/gson-2.2.3.jar')
     compile 'com.facebook.react:react-native:+'
     //添加React Native依赖
+    compile files('libs/mqtt-client-0.4.0.jar')
 }

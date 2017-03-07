@@ -25,6 +25,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     private Button button;
     private Button button2;
     private Button button3;
+    private Button btn4;
     private ImageView imageview;
     private String photoPath;
 
@@ -35,12 +36,14 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         button = (Button) findViewById(R.id.btn);
         button2 = (Button) findViewById(R.id.btn2);
         button3 = (Button) findViewById(R.id.btn3);
+        btn4 = (Button) findViewById(R.id.btn4);
         imageview = (ImageView) findViewById(R.id.imageView);
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
         String absolutePath = Environment.getExternalStorageDirectory().getPath();
-        photoPath = absolutePath + "/" + "temp"+System.currentTimeMillis()+".png";
+        photoPath = absolutePath + "/" + "temp" + System.currentTimeMillis() + ".png";
     }
 
     @Override
@@ -53,9 +56,10 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             Uri uri = Uri.fromFile(new File(photoPath));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//更改系统存储图片的路径
             startActivityForResult(intent, 2);
-        }else if(v.getId()==R.id.btn3){
-            Intent intent = new Intent(TestActivity.this,CustomPhotoActivity.class);
+        } else if (v.getId() == R.id.btn3) {
+            Intent intent = new Intent(TestActivity.this, CustomPhotoActivity.class);
             startActivityForResult(intent, 3);
+        } else if (v.getId() == R.id.btn4) {
 
         }
     }
