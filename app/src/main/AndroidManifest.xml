@@ -108,6 +108,11 @@
          release builds if you need to.-->
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <activity android:name=".ui.home.PushReciverActivity" />
+
+        <service
+            android:name=".services.UpdateService"
+            android:exported="true"
+            android:process=":UpdateService" />
     </application>
 
 </manifest>

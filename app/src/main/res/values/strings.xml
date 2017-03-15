@@ -4,4 +4,8 @@
     <string name="please_select_photo">请选择照片</string>
     <string name="take_photo">立即拍照</string>
     <string name="take_image_from_local">从本地相册选取</string>
+
+
+    <string name="download_progress">正在下载:%1$d%%</string>
+    <string name="download_success">下载完成，点击安装</string>
 </resources>
