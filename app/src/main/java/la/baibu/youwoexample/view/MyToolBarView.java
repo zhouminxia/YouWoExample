@@ -18,7 +18,7 @@ import la.baibu.youwoexample.utils.StringUtil;
  */
 public class MyToolBarView extends RelativeLayout {
     private Context mContext;
-    private View view;
+    private View topBarView;
     private ImageView leftIv;
     private ImageView middleIv;
     private ImageView rightIv;
@@ -51,6 +51,7 @@ public class MyToolBarView extends RelativeLayout {
     private int middleImageResId;
     private int rightImageResId;
     private OnClickListener lister;
+    private int backgroundColor;
 
     public MyToolBarView(Context context) {
         this(context, null);
@@ -76,6 +77,7 @@ public class MyToolBarView extends RelativeLayout {
     private void getAttrs(AttributeSet attrs, int defStyleAttr) {
         typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.MyToolBarStyle);
 
+        getMyToolbarBg();
         getLeftText();
         getMiddleText();
         getRightText();
@@ -85,6 +87,7 @@ public class MyToolBarView extends RelativeLayout {
 
         typedArray.recycle();//记得回收
 
+        setMyToolbarBgColor(backgroundColor);
         setLeftText();
         setMiddleText();
         setRightTex();
@@ -92,31 +95,11 @@ public class MyToolBarView extends RelativeLayout {
         setLeftImage();
         setMiddleImage();
         setRightImage();
-
-        //文字和头像只能有一个可见
-//        if (leftIv.getVisibility() == View.VISIBLE) {
-//            leftTv.setVisibility(View.GONE);
-//        }
-//        if (leftTv.getVisibility() == View.VISIBLE) {
-//            leftIv.setVisibility(View.GONE);
-//        }
-//
-//        if (middleIv.getVisibility() == View.VISIBLE) {
-//            middleTv.setVisibility(View.GONE);
-//        }
-//        if (middleTv.getVisibility() == View.VISIBLE) {
-//            middleIv.setVisibility(View.GONE);
-//        }
-//
-//        if (rightIv.getVisibility() == View.VISIBLE) {
-//            rightTv.setVisibility(View.GONE);
-//        }
-//        if (rightTv.getVisibility() == View.VISIBLE) {
-//            rightIv.setVisibility(View.GONE);
-//        }
     }
 
-
+    private void getMyToolbarBg() {
+        backgroundColor = typedArray.getResourceId(R.styleable.MyToolBarStyle_backgroundColor, R.color.mytoolbar_bg_color);
+    }
 
     private void getRightImage() {
         //右边图片
@@ -145,6 +128,12 @@ public class MyToolBarView extends RelativeLayout {
         }
         leftIv.setVisibility(leftImageIsVisible ? View.VISIBLE : View.GONE);
         leftIv.setClickable(leftImageIsClickable);
+    }
+
+    private void setMyToolbarBgColor(int colorRes) {
+        if (backgroundColor != 0) {
+            topBarView.setBackgroundColor(colorRes);
+        }
     }
 
     private void setMiddleImage() {
@@ -231,14 +220,14 @@ public class MyToolBarView extends RelativeLayout {
      * 得到布局和view
      */
     private void getLayoutAndViews() {
-        view = LayoutInflater.from(mContext).inflate(R.layout.template_topbar_base, this, true);
-        leftIv = (ImageView) view.findViewById(R.id.iv_left_img);
-        middleIv = (ImageView) view.findViewById(R.id.iv_middle_img);
-        rightIv = (ImageView) view.findViewById(R.id.iv_right_img);
+        topBarView = LayoutInflater.from(mContext).inflate(R.layout.template_topbar_base, this, true);
+        leftIv = (ImageView) topBarView.findViewById(R.id.iv_left_img);
+        middleIv = (ImageView) topBarView.findViewById(R.id.iv_middle_img);
+        rightIv = (ImageView) topBarView.findViewById(R.id.iv_right_img);
 
-        leftTv = (TextView) view.findViewById(R.id.tv_left_text);
-        middleTv = (TextView) view.findViewById(R.id.tv_middle_text);
-        rightTv = (TextView) view.findViewById(R.id.tv_right_text);
+        leftTv = (TextView) topBarView.findViewById(R.id.tv_left_text);
+        middleTv = (TextView) topBarView.findViewById(R.id.tv_middle_text);
+        rightTv = (TextView) topBarView.findViewById(R.id.tv_right_text);
     }
 
     public String getLeftTextText() {

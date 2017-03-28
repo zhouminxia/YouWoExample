@@ -66,7 +66,7 @@ public class InfoActivity extends BaseActivity implements ObservableScrollView.S
     ObservableScrollView scrollview;
 
     private int imageHeight;
-    private int statusBarColor = Color.parseColor("#00FFFFFF");
+    private int statusBarColor =R.color.mytoolbar_bg_color;
     private Toolbar toolbar;
     private MyGridViewAdapter myGridViewAdapter;
     private File cameraFile;//拍照返回的文件

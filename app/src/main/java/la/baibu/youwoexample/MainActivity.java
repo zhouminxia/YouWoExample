@@ -1,15 +1,14 @@
 package la.baibu.youwoexample;
 
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import la.baibu.youwoexample.fragments.HomeFragment;
-import la.baibu.youwoexample.fragments.SecondFragment;
 import la.baibu.youwoexample.fragments.MapFragment;
 import la.baibu.youwoexample.fragments.MyFragment;
+import la.baibu.youwoexample.fragments.SecondFragment;
 import la.baibu.youwoexample.ui.BaseActivity;
 import la.baibu.youwoexample.view.MainBottomTabLayout;
 
@@ -35,7 +34,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getStatusBarColor() {
-        return Color.parseColor(getString(R.string.red_color_str));
+        return R.color.mytoolbar_bg_color;
     }
 
 

@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="MyToolBarStyle">
 
+        <attr name="backgroundColor" format="color" />
         <!--左边文字-->
         <attr name="leftTextText" format="string" />
         <attr name="leftTextColor" format="color" />
@@ -39,4 +40,13 @@
         <attr name="rightImageIsClikable" format="boolean" />
 
     </declare-styleable>
+
+
+    <!--自定义控件一标题-->
+    <declare-styleable name="CustomTitleView">
+        <attr name="customTitleText" format="string" />
+        <attr name="customTitleTextColor" format="color" />
+        <attr name="customTitleTextSize" format="dimension" />
+    </declare-styleable>
+
 </resources>

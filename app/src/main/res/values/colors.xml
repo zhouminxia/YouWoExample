@@ -5,10 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00FFFFFF</color>
+    <color name="transparent_half">#55FFFFFF</color>
     <color name="main_page_text_color">#cfcfcf</color>
     <color name="main_tab_text_color_normal">#ffffff</color>
     <color name="main_tab_text_color_selected">#ff0000</color>
-    <color name="system_bar_color">#bbff0000</color>
+    <color name="mytoolbar_bg_color">#bbff0000</color>
 
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="actionsheet_blue">#037BFF</color>

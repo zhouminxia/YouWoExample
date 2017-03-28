@@ -23,6 +23,13 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <!--半透明theme-->
+    <style name="AppTheme.TrunslucentTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/actionsheet_blue</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <!-- 自定义仿IOS的ActionSheet底部Dialog的样式 ，有模糊效果 -->
     <style name="ActionSheetDialogStyle">

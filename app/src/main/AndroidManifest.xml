@@ -113,6 +113,17 @@
             android:name=".services.UpdateService"
             android:exported="true"
             android:process=":UpdateService" />
+
+        <activity
+            android:name=".ui.home.TranslucentActivity"
+            android:theme="@style/AppTheme.TrunslucentTheme" />
+        <activity
+            android:name=".ui.home.CustomViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.home.CustomeOneActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
