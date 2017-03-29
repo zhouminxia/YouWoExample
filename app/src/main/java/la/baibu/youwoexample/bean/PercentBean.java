@@ -18,6 +18,17 @@ public class PercentBean implements Serializable {
     public PercentBean() {
     }
 
+    public PercentBean(float value, String name) {
+        this.value = value;
+        this.name = name;
+    }
+
+    public PercentBean(float value, String name, int color) {
+        this.value = value;
+        this.name = name;
+        this.color = color;
+    }
+
     public float getPercentAngel() {
         return percentAngel;
     }

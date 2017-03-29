@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import la.baibu.youwoexample.R;
 import la.baibu.youwoexample.bean.PercentBean;
 
 /**
@@ -36,15 +37,16 @@ public class PercentView extends View {
 
     public PercentView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {//代码中获取的长宽单位都是px,比如布局中写宽：200dp，在xxhdpi手机上的宽就是600px
         super.onSizeChanged(w, h, oldw, oldh);
-        mWidth=w;
-        mHeight=h;
+        mWidth = w;
+        mHeight = h;
     }
 
     @Override
@@ -54,14 +56,17 @@ public class PercentView extends View {
             return;
         }
 
-        float radius =(float) Math.min(mWidth, mHeight);
-        RectF rect=new RectF(-radius,-radius,radius,radius);
-        float currentStartAngle =mStartAngle;
+        float radius = (float) (Math.min(mWidth, mHeight) / 2 * 0.5);
+        RectF rectF = new RectF(radius, radius, radius * 4, radius * 4);
+        mPaint.setColor(getResources().getColor(R.color.main_page_text_color));//给矩形绘制一个灰色的背景
+        canvas.drawRect(rectF, mPaint);
+        float currentStartAngle = mStartAngle;
         for (int i = 0; i < mPercentBean.size(); i++) {
             PercentBean percentBean = mPercentBean.get(i);
-            canvas.drawArc(rect,currentStartAngle,percentBean.getPercentAngel(),true,mPaint);
+            mPaint.setColor(percentBean.getColor());
+            canvas.drawArc(rectF, currentStartAngle, percentBean.getPercentAngel(), true, mPaint);//内切圆
             float percentAngel = percentBean.getPercentAngel();
-            currentStartAngle+=percentAngel;
+            currentStartAngle += percentAngel;
         }
     }
 
@@ -83,8 +88,10 @@ public class PercentView extends View {
             percentBean.setPercent(value / sumValue * 100);//给每个设置占比
             percentBean.setPercentAngel(value / sumValue * 365);
 
-            int j = i % mPercentBean.size();
-            percentBean.setColor(mColors[j]);
+            if (percentBean.getColor() == -1) {
+                int j = i % mPercentBean.size();
+                percentBean.setColor(mColors[j]);
+            }
         }
     }
 
