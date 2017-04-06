@@ -13,4 +13,5 @@
 
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="actionsheet_blue">#037BFF</color>
+    <color name="black">#000000</color>
 </resources>

@@ -9,4 +9,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="自定义一" />
+
+    <Button
+        android:id="@+id/btn_custome_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义二" />
+
+    <Button
+        android:id="@+id/btn_custome_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义三" />
+    <Button
+        android:id="@+id/btn_custome_four"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义四" />
 </LinearLayout>
