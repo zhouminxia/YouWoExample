@@ -22,6 +22,8 @@ public class CustomViewActivity extends BaseActivity {
     Button btn_custome_three;
     @BindView(R.id.btn_custome_four)
     Button btn_custome_four;
+    @BindView(R.id.btn_custome_five)
+    Button btn_custome_five;
 
     @Override
     protected int getLayoutResID() {
@@ -56,6 +58,11 @@ public class CustomViewActivity extends BaseActivity {
     @OnClick(R.id.btn_custome_four)
     public void gotoCustomeFour() {
         Intent intent = new Intent(mContext, CustomeFourActivity.class);
+        mContext.startActivity(intent);
+    }
+    @OnClick(R.id.btn_custome_five)
+    public void gotoCustomeFive() {
+        Intent intent = new Intent(mContext, CustomeFiveActivity.class);
         mContext.startActivity(intent);
     }
 

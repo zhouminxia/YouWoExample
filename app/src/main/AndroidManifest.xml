@@ -134,6 +134,9 @@
         <activity
             android:name=".ui.home.CustomeFourActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.home.CustomeFiveActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

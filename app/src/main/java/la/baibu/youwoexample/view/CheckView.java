@@ -22,23 +22,24 @@ public class CheckView extends View {
     private static final int ANIM_CHECK = 1;        //动画状态-开启
     private static final int ANIM_UNCHECK = 2;      //动画状态-结束
 
-    private Context mContext;           // 上下文
-    private int mWidth, mHeight;        // 宽高
-    private Handler mHandler;           // handler
+    private Context mContext;
 
     private Paint mPaint;
+    private int mWidth, mHeight;//宽高
+    private Handler handler;
     private Bitmap okBitmap;
 
+    private int currentPage = -1;//当前页数
     private int animCurrentPage = -1;       // 当前页码
     private int animMaxPage = 13;           // 总页数
     private int animDuration = 500;         // 动画时长
+
     private int animState = ANIM_NULL;      // 动画状态
 
     private boolean isCheck = false;        // 是否只选中状态
 
     public CheckView(Context context) {
         this(context, null);
-
     }
 
     public CheckView(Context context, AttributeSet attrs) {
@@ -61,7 +62,7 @@ public class CheckView extends View {
 
         okBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.checkres);
 
-        mHandler = new Handler() {
+        handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -75,7 +76,7 @@ public class CheckView extends View {
                     } else if (animState == ANIM_UNCHECK) {
                         animCurrentPage--;
                     }
-
+                    invalidate();
                     this.sendEmptyMessageDelayed(0, animDuration / animMaxPage);
                     Log.e("AAA", "Count=" + animCurrentPage);
                 } else {
@@ -115,7 +116,7 @@ public class CheckView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        Log.e("llx", "onDraw()--");
         // 移动坐标系到画布中央
         canvas.translate(mWidth / 2, mHeight / 2);
 
@@ -142,7 +143,7 @@ public class CheckView extends View {
             return;
         animState = ANIM_CHECK;
         animCurrentPage = 0;
-        mHandler.sendEmptyMessageDelayed(0, animDuration / animMaxPage);
+        handler.sendEmptyMessageDelayed(0, animDuration / animMaxPage);
         isCheck = true;
     }
 
@@ -154,7 +155,7 @@ public class CheckView extends View {
             return;
         animState = ANIM_UNCHECK;
         animCurrentPage = animMaxPage - 1;
-        mHandler.sendEmptyMessageDelayed(0, animDuration / animMaxPage);
+        handler.sendEmptyMessageDelayed(0, animDuration / animMaxPage);
         isCheck = false;
     }
 

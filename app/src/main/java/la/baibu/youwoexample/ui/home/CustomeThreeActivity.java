@@ -30,7 +30,6 @@ public class CustomeThreeActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initViewsAndDatas() {
-
         btn_check.setOnClickListener(this);
         btn_uncheck.setOnClickListener(this);
     }
@@ -53,6 +52,7 @@ public class CustomeThreeActivity extends BaseActivity implements View.OnClickLi
         int id = v.getId();
         if (R.id.btn_check == id) {
             checkview.check();
+
         } else if (R.id.btn_uncheck == id) {
             checkview.unCheck();
         }

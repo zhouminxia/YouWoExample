@@ -1,13 +1,14 @@
 package la.baibu.youwoexample.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Picture;
-import android.graphics.RectF;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+
+import la.baibu.youwoexample.R;
 
 /**
  * Created by minna_Zhou on 2017/4/6 0006.
@@ -38,15 +39,8 @@ public class DrawPictureView extends View {
         }
         mCanvas = canvas;
         startDrawPicture();
-//        startDrawPicture2();
     }
 
-
-    private void startDrawPicture2() {
-
-        Picture picture = new Picture();
-        mCanvas.drawPicture(picture,new RectF(0,0,picture.getWidth(),200));
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -56,24 +50,17 @@ public class DrawPictureView extends View {
     }
 
     /**
-     * 使用canvus.drawpicture和canvus.drawdrawable
-     * 无效，这种方式是不推荐的
+     * canvus.drawdrawable
      */
     private void startDrawPicture() {
 
-        Picture picture = new Picture();
-
-        Canvas canvas = picture.beginRecording(200, 200);//开始录制
-
-        // 创建一个画笔
-        Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.translate(mWidth / 2, mHeight / 2);
-        canvas.drawCircle(0, 0, 100, paint);
-        picture.endRecording();//结束录制
-
-        canvas.drawPicture(picture,new RectF(0,0,picture.getWidth(),200));
+        mCanvas.translate(mWidth / 2, mHeight / 2);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.checkres);
+//        mCanvas.drawBitmap(bitmap, new Matrix(), new Paint());
+//        mCanvas.drawBitmap(bitmap, 400, 200, new Paint());
+        // 指定图片绘制区域(左上角的四分之一)
+        Rect srcRect = new Rect(0,  bitmap.getWidth() / 2,bitmap.getHeight() / 2,bitmap.getHeight());
+        Rect desRext = new Rect(0, 0, 200, 200);
+        mCanvas.drawBitmap(bitmap, srcRect, desRext, null);
     }
 }
