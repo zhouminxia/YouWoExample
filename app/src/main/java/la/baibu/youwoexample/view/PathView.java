@@ -16,6 +16,7 @@ public class PathView extends View {
     private Canvas mCanvas;
     private int mWidth;
     private int mHeight;
+    private Paint mPaint;
 
     public PathView(Context context) {
         this(context, null);
@@ -48,15 +49,13 @@ public class PathView extends View {
 
     private void startPath() {
 
-        Paint mPaint = new Paint();             // 创建画笔
+        // 创建画笔
+        mPaint = new Paint();
         mPaint.setColor(Color.BLACK);           // 画笔颜色 - 黑色
         mPaint.setStyle(Paint.Style.STROKE);    // 填充模式 - 描边
         mPaint.setStrokeWidth(10);
 
-        mCanvas.translate(mWidth / 2, mHeight / 2);//将坐标圆点移到中间来
 
-
-        Path path = new Path();
 //        path.lineTo(200, 200);
 //        path.lineTo(0, 0);
 //        path.setLastPoint(200,0);//把上一个点的绘制改变
@@ -64,8 +63,28 @@ public class PathView extends View {
 //        path.lineTo(0,0);
 //        path.close();
 
-        path.addRect(new RectF(-200, -200, 200, 200), Path.Direction.CW);//Path.Direction.CW是顺时针
-        path.setLastPoint(-300, 300);
+//        path.addRect(new RectF(-200, -200, 200, 200), Path.Direction.CCW);//Path.Direction.CW是顺时针
+//        path.setLastPoint(-300, 300);
+
+
+        mCanvas.translate(mWidth / 2, mHeight / 2);  // 移动坐标系到屏幕中心
+        mCanvas.scale(-1, -1);//y轴翻过去
+
+//        Path path = new Path();
+//
+//        path.addRect(-200, -200, 200, 200, Path.Direction.CW);
+//        path.setLastPoint(-300, 300);
+//
+//        mCanvas.drawPath(path, mPaint);
+
+        Path path = new Path();
+        path.addRect(new RectF(-200, -200, 200, 200), Path.Direction.CW);
+
+        Path src = new Path();
+        src.addCircle(0, 0, 100, Path.Direction.CW);
+
+        path.addPath(src, 200, 0);
+
         mCanvas.drawPath(path, mPaint);
     }
 }
